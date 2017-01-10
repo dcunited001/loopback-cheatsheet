@@ -17,21 +17,46 @@
 
 ## Default remote methods
 ### PersistedModel
-| Name               | Static | Method | Route    | Operation hooks invoked |
-|--------------------|--------|--------|----------|-------|
-| find               | true   | GET    | /objects | access, loaded
-| upsert (updateOrCreate) | true | PUT | /objects | access, before save, after save, loaded, persist
-| create             | true   | POST   | /objects | before save, after save, loaded, persist
-| findById           | true   | GET    | /objects/:id | access, loaded
-| exists             | true   | HEAD   | /objects/:id | access, loaded
-| --                 | --     | GET    | /objects/:id/exists |
-| updateAttributes   | false  | PUT    | /objects/:id | before save, after save, loaded, persist
-| deleteById         | true   | DELETE | /objects/:id | access, before save, after save, loaded, persist
-| createChangeStream | true   | GET    | /objects/change-stream |
-| --                 | --     | POST   | /objects/change-stream |
-| count              | true   | GET    | /objects/count | access, loaded
-| findOne            | true   | GET    | /objects/findOne | access, loaded
-| updateAll          | true   | POST   | /objects/update | access, before save, after save, persist
+| Name               | Endpoint | Operation hooks invoked |
+|--------------------|----------|----------|-------|
+| bulkUpdate
+| changes
+| checkpoint
+| count                 | GET /_modelName_/count | access, loaded
+| create                | POST /_modelName_ | before save, after save, loaded, persist
+| createChangeStream    | GET /_modelName_/change-stream<br />POST /_modelName_/change-stream |
+| createUpdates
+| currentCheckpoint
+| destroyAll
+| destroyById           | DELETE /_modelName_/_modelID_ | access, before save, after save, loaded, persist
+| diff
+| enableChangeTracking
+| exists                | GET /_modelName_/_modelID_/exists<br />HEAD /_modelName_/_modelID_ | access, loaded
+| find                  | GET /_modelName_ | access, loaded
+| findById              | GET /_modelName_/_modelID_ | access, loaded
+| findOne               | GET /_modelName_/findOne | access, loaded
+| findOrCreate            
+| getChangeModel
+| geIdName
+| getSourceId
+| handleChangeError
+| rectifyChange
+| replaceById
+| replaceOrCreate
+| replicate
+| updateAll             | POST /_modelName_/update | access, before save, after save, persist
+| upsert                | PUT /_modelName_ | access, before save, after save, loaded, persist
+| upsertWithWhere       
+|
+| prototype.destroy   
+| prototype.getId
+| prototype.getIdName
+| prototype.isNewRecord
+| prototype.reload
+| prototype.replaceAttributes
+| prototype.save
+| prototype.updateAttribute  
+| prototype.updateAttributes | PUT /_modelName_/_modelID_ | before save, after save, loaded, persist
 
 ### Relations
 
