@@ -17,21 +17,21 @@
 
 ## Default remote methods
 ### PersistedModel
-| Name               | Static | Method | Route     |
-|--------------------|--------|--------|----------|
-| find               | true   | GET    | /objects
-| upsert             | true   | PUT    | /objects
-| create             | true   | POST   | /objects
-| findById           | true   | GET    | /objects/:id
-| exists             | true   | HEAD   | /objects/:id
-| --                 | --     | GET    | /objects/:id/exists 
-| updateAttributes   | false  | PUT    | /objects/:id
-| deleteById         | true   | DELETE | /objects/:id
-| createChangeStream | true   | GET    | /objects/change-stream
-| --                 | --     | POST   | /objects/change-stream
-| count              | true   | GET    | /objects/count
-| findOne            | true   | GET    | /objects/findOne
-| updateAll          | true   | POST    | /objects/update
+| Name               | Static | Method | Route    | Operation hooks invoked |
+|--------------------|--------|--------|----------|-------|
+| find               | true   | GET    | /objects | access, loaded
+| upsert (updateOrCreate) | true | PUT | /objects | access, before save, after save, loaded, persist
+| create             | true   | POST   | /objects | before save, after save, loaded, persist
+| findById           | true   | GET    | /objects/:id | access, loaded
+| exists             | true   | HEAD   | /objects/:id | access, loaded
+| --                 | --     | GET    | /objects/:id/exists |
+| updateAttributes   | false  | PUT    | /objects/:id | before save, after save, loaded, persist
+| deleteById         | true   | DELETE | /objects/:id | access, before save, after save, loaded, persist
+| createChangeStream | true   | GET    | /objects/change-stream |
+| --                 | --     | POST   | /objects/change-stream |
+| count              | true   | GET    | /objects/count | access, loaded
+| findOne            | true   | GET    | /objects/findOne | access, loaded
+| updateAll          | true   | POST   | /objects/update | access, before save, after save, persist
 
 ### Relations
 
