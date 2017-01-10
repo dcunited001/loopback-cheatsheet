@@ -19,36 +19,39 @@
 ### PersistedModel
 | Name               | Endpoint | Operation hooks invoked |
 |--------------------|----------|----------|-------|
-| bulkUpdate
-| changes
-| checkpoint
-| count                 | GET /_modelName_/count | access, loaded
-| create                | POST /_modelName_ | before save, after save, loaded, persist
-| createChangeStream    | GET /_modelName_/change-stream<br />POST /_modelName_/change-stream |
-| createUpdates
-| currentCheckpoint
-| destroyAll
-| destroyById           | DELETE /_modelName_/_modelID_ | access, before save, after save, loaded, persist
-| diff
+| bulkUpdate    | POST /:modelName/bulk-update
+| changes       | GET /:modelName/changes *
+| checkpoint    | POST /:modelName/checkpoint * 
+| count         | GET /:modelName/count | access, loaded
+| create                | POST /:modelName | before save, after save, loaded, persist
+| createChangeStream    | GET /:modelName/change-stream<br />POST /:modelName/change-stream |
+| createUpdates         | POST /:modelName/create-updates
+| currentCheckpoint     | GET /:modelName/checkpoint * 
+| destroyAll / remove / deleteAll       | DELETE /:modelName
+| destroyById / removeById / deleteById | DELETE /:modelName/:modelId | access, before save, after save, loaded, persist
+| diff | POST /_modelName_/diff *
 | enableChangeTracking
-| exists                | GET /_modelName_/_modelID_/exists<br />HEAD /_modelName_/_modelID_ | access, loaded
-| find                  | GET /_modelName_ | access, loaded
-| findById              | GET /_modelName_/_modelID_ | access, loaded
-| findOne               | GET /_modelName_/findOne | access, loaded
+| exists                | GET /:modelName/:modelId/exists<br />HEAD /:modelName/:modelId | access, loaded
+| find                  | GET /:modelName | access, loaded
+| findById              | GET /:modelName/:modelId | access, loaded
+| findLastChange        | GET /:modelName/:modelId/changes/last
+| findOne               | GET /:modelName/findOne | access, loaded
 | findOrCreate            
 | getChangeModel
 | geIdName
 | getSourceId
 | handleChangeError
-| rectifyChange
+| rectifyAllChanges   | POST /:modelName/rectify-all *
+| rectifyChange       | POST /:modelName/:modelId/rectify-change *
 | replaceById
 | replaceOrCreate
 | replicate
-| updateAll             | POST /_modelName_/update | access, before save, after save, persist
-| upsert                | PUT /_modelName_ | access, before save, after save, loaded, persist
+| updateAll / update      | POST /:modelName/update | access, before save, after save, persist
+| updateLastChange        | PUT /:modelName/:modelId/changes/last
+| upsert / updateOrCreate | PUT /:modelName | access, before save, after save, loaded, persist
 | upsertWithWhere       
 |
-| prototype.destroy   
+| prototype.destroy / prototype.remove / prototype.delete  
 | prototype.getId
 | prototype.getIdName
 | prototype.isNewRecord
@@ -56,16 +59,18 @@
 | prototype.replaceAttributes
 | prototype.save
 | prototype.updateAttribute  
-| prototype.updateAttributes | PUT /_modelName_/_modelID_ | before save, after save, loaded, persist
+| prototype.updateAttributes | PUT /:modelName/:modelId | before save, after save, loaded, persist
+ 
+* : if trackChanges enabled
 
 ### Relations
 
 | Name                    | Static | Method | Route     
 |-------------------------|--------|--------|----------
-| __get__relation         | false  | POST   | /objects/:id/relation
-| __create__relation      | false  | POST   | /objects/:id/relation
-| __delete__relation      | false  | DELETE | /objects/:id/relation
-| __findById__relation    | false  | GET    | /objects/:id/relation/:fk
-| __updateById__relation  | false  | PUT    | /objects/:id/relation/:fk
-| __destroyById__relation | false  | DELETE | /objects/:id/relation/:fk
-| __count__relation       | false  | GET    | /objects/:id/relation/count
+| __get__relation         | false  | POST   | /:modelName/:modelId/relation
+| __create__relation      | false  | POST   | /:modelName/:modelId/relation
+| __delete__relation      | false  | DELETE | /:modelName/:modelId/relation
+| __findById__relation    | false  | GET    | /:modelName/:modelId/relation/:fk
+| __updateById__relation  | false  | PUT    | /:modelName/:modelId/relation/:fk
+| __destroyById__relation | false  | DELETE | /:modelName/:modelId/relation/:fk
+| __count__relation       | false  | GET    | /:modelName/:modelId/relation/count
